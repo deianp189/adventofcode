@@ -17,20 +17,25 @@ public class FirstPart {
 	
 	public static void solve() throws IOException {
 		String line;
-		int firstDigit = -1, lastDigit = 0;
+		
 		while((line = input.readLine()) != null) {
-			for(char digit : line.toCharArray()) {
-				if(Character.isDigit(digit)) {
+			int firstDigit = -1, lastDigit = 0;
+			for(char letter : line.toCharArray()) {
+				if(Character.isDigit(letter)) {
+					int digit = Integer.valueOf(String.valueOf(letter));
 					if(firstDigit == -1) {
-						firstDigit = (int) digit;
+						firstDigit = digit;
+						lastDigit = digit;
 					} else {
-						lastDigit = (int) digit;
+						lastDigit = digit;
 					}
 				}
 			}
+			if(firstDigit == -1) continue;
+			System.out.println(firstDigit * 10 + lastDigit);
+			result += firstDigit * 10 + lastDigit;
 		}
-		if(firstDigit == -1) return;
-		result += firstDigit * 10 + lastDigit;
+		
 	}
     public static void main(String[] args) {
         System.out.println("Day 1 - First Part");
