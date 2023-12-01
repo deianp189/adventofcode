@@ -6,11 +6,44 @@ import java.util.Scanner;
 
 public class FirstPart {
 
-	// private ArrayList<Integer> sumas;
 	private ArrayList<ArrayList<String>> numeros;
+	private ArrayList<Integer> suma;
 
 	public FirstPart() {
 		this.numeros = new ArrayList<>();
+		this.suma = new ArrayList<>();
+	}
+
+	public Integer sumaTotal() {
+		Integer suma = 0;
+		for (Integer numero : this.suma) {
+			suma += numero;
+		}
+		return suma;
+	}
+
+	public void procesarNumeros() {
+		for (ArrayList<String> sublista : this.numeros) {
+			for (int i = 0; i < sublista.size(); i++) {
+				String elemento = sublista.get(i);
+				if (elemento.length() > 1) {
+					// Numero de múltiples digitos
+					sublista.remove(i);
+					for (int j = elemento.length() - 1; j >= 0; j--) {
+						sublista.add(i, String.valueOf(elemento.charAt(j)));
+					}
+				} else if (elemento.length() == 1 && sublista.size() == 1) {
+					// Numero de un solo dígito y está solo en la sublista
+					sublista.add(elemento); // Repetir el digito
+				}
+			}
+		}
+	}
+
+	public void add() {
+		for (ArrayList<String> lista : this.numeros) {
+			this.suma.add(Integer.parseInt(lista.get(0) + lista.get(lista.size() - 1)));
+		}
 	}
 
 	static String directorioEntrada = System.getProperty("user.dir") + File.separator + "src" + File.separator + "cDeos"
@@ -47,15 +80,19 @@ public class FirstPart {
 
 	@Override
 	public String toString() {
-		return this.numeros.toString();
+		return this.numeros.toString() + "\n" + this.suma.toString();
 	}
 
 	public static void main(String[] args) {
 
-		FirstPart prueba = new FirstPart();
-		prueba.load(directorioEntrada + "firstInput.txt");
+		FirstPart primerReto = new FirstPart();
+		primerReto.load(directorioEntrada + "firstInput.txt");
 
-		System.out.println(prueba.toString());
+		primerReto.procesarNumeros();
+		primerReto.add();
+		System.out.println(primerReto.toString());
+		System.out.println();
+		System.out.println(primerReto.sumaTotal());
 
 	}
 }
