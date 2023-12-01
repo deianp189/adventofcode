@@ -22,21 +22,21 @@ static BufferedReader input;
 			int startNumIndex = 0;
 			for(int i = 0; i < line.length(); i++) {
 				int digit = 0;
-				if(Character.isDigit(line.charAt(i))) {
+				if(i != line.length() && Character.isDigit(line.charAt(i))) {
 					digit = Integer.valueOf(String.valueOf(line.charAt(i)));	
-					
+					System.out.println(digit + " "+ line);
 				}
-				else if((digit = toNumber(line.substring(startNumIndex, i))) == -1){
+				else if((digit = toNumber(line.substring(startNumIndex, i+1))) == -1){
 					continue;
+				} else {
+					System.out.println(digit + " "+ line);
 				}
 				
-				startNumIndex = i+1;
+				startNumIndex = i-1 >= 0 ? i-1 : 0;
 				if(firstDigit == -1) {
 					firstDigit = digit;
-					lastDigit = digit;
-				} else {
-					lastDigit = digit;
 				}
+				lastDigit = digit;
 			}
 			if(firstDigit == -1) continue;
 			
@@ -46,29 +46,32 @@ static BufferedReader input;
 	}
 	
 	public static int toNumber(String str) {
-		
-		switch(str) {
-		case "one":
-			return 1;
-		case "two":
-			return 2;
-		case "three":
-			return 3;
-		case "four":
-			return 4;
-		case "five":
-			return 5;
-		case "six":
-			return 6;
-		case "seven":
-			return 7;
-		case "eight":
-			return 8;
-		case "nine":
-			return 9;
-		default:
-			return -1;
+		for(int i = 0; i <= str.length(); i++) {
+			for(int j = i; j <= str.length(); j++) {
+				switch(str.substring(i,j)) {
+				case "one":
+					return 1;
+				case "two":
+					return 2;
+				case "three":
+					return 3;
+				case "four":
+					return 4;
+				case "five":
+					return 5;
+				case "six":
+					return 6;
+				case "seven":
+					return 7;
+				case "eight":
+					return 8;
+				case "nine":
+					return 9;
+				}
+			}
 		}
+		return -1;
+		
 	}
     public static void main(String[] args) {
         System.out.println("Day 1 - First Part");
